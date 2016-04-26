@@ -120,7 +120,6 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     this.user = { name: name };
                     this.socket.emit("join", this.user);
                 };
-                ;
                 //handle form submission for sending a chat message 
                 ChatService.prototype.sendMessage = function (message) {
                     console.log("Sending message: ", message);

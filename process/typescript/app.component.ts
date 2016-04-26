@@ -13,10 +13,7 @@ import {ChatService, Server} from './chat.service';
     <div class="container">
       <h1>{{title}} 
         <!-- status tag changes based upon the connection state -->
-        <span id="status" class="label label-default"
-          [class.label-default]="server.loading" 
-          [class.label-success]="!server.loading && server.connected" 
-          [class.label-danger]="!server.loading && !server.connected">{{statusMessage()}}</span>
+        <span id="status" [ngClass]="statusClass()">{{statusMessage()}}</span>
       </h1>
     </div>
     <!-- show join component if the server is not connected or the user hasn't joined yet -->
@@ -32,15 +29,22 @@ export class AppComponent implements OnInit {
   server : Server;
 
   //CLASS METHODS
-  constructor(private _chatService: ChatService) {
+  constructor(private _chatService: ChatService) {}
+  
+  ngOnInit(){
     //one component is created grab a reference to the server from the Chat Service
     this.server = this._chatService.getServer();
   }
   
+  statusClass():string {
+    if (this.server.loading) return "label label-default";
+    if (this.server.connected) return "label label-success";
+    return "label label-danger";
+  }
   //decide what status message should be based upon connection
   statusMessage():string {
-      if (!this.server.loading && this.server.connected) return "connected"
-      if (!this.server.loading && !this.server.connected) return "disconnected"
-      return "loading"
+      if (this.server.loading) return "loading";
+      if (this.server.connected) return "connected";
+      return "disconnected";
   }
 }

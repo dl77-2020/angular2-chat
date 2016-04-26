@@ -1,6 +1,5 @@
 // Import all of our dependencies
 import {Injectable} from 'angular2/core';
-import {Server} from './server';
 
 // Define the interfaces for the data types we are working with.
 export interface Server {
@@ -24,14 +23,14 @@ export interface Message {
 export class ChatService {
   //CLASS PROPERTIES
   socket;
-  const server:Server = {
+  server:Server = {
     loading: true,
     connected: false,
     joined: false,
     online: ""
   }
-  const user: User = { name: "Anon" };
-  const messages : Message[] = [];
+  user: User = { name: "Anon" };
+  messages : Message[] = [];
 
   //property accessor functions
   getServer(){
@@ -130,7 +129,7 @@ export class ChatService {
 
     this.user = { name: name }
     this.socket.emit("join", this.user );
-  });
+  }
   
   //handle form submission for sending a chat message 
   sendMessage(message) {

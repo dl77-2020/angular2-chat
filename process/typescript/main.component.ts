@@ -1,7 +1,7 @@
 // Import all of our dependencies
 import {Component} from 'angular2/core';
 import {FormComponent} from './form.component';
-import {ChatService, Server} from './chat.service';
+import {ChatService, Server, Message} from './chat.service';
 
 // Use the @Component Decorator to define the following class as a component and provide the meta data including the view 
 @Component({
@@ -32,7 +32,7 @@ import {ChatService, Server} from './chat.service';
 export class MainComponent {
   //CLASS PROPERTIES
   server : Server;
-  messages : Messages[];
+  messages : Message[];
 
   //CLASS METHODS
   constructor(private _chatService: ChatService) {

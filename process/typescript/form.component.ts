@@ -20,6 +20,7 @@ export class FormComponent {
   
   inputValue:string;
   server : Server;
+  isJoining : boolean;
   //when a form component is specified in a template, it is passed a boolean variable to say whether it is a JoinForm or a ChatForm
   @Input() isJoinForm: boolean;
 

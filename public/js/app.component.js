@@ -34,23 +34,32 @@ System.register(['angular2/core', './main.component', './join.component', './cha
                     this._chatService = _chatService;
                     //CLASS PROPERTIES
                     this.title = "Angular 2 Chat";
+                }
+                AppComponent.prototype.ngOnInit = function () {
                     //one component is created grab a reference to the server from the Chat Service
                     this.server = this._chatService.getServer();
-                }
+                };
+                AppComponent.prototype.statusClass = function () {
+                    if (this.server.loading)
+                        return "label label-default";
+                    if (this.server.connected)
+                        return "label label-success";
+                    return "label label-danger";
+                };
                 //decide what status message should be based upon connection
                 AppComponent.prototype.statusMessage = function () {
-                    if (!this.server.loading && this.server.connected)
+                    if (this.server.loading)
+                        return "loading";
+                    if (this.server.connected)
                         return "connected";
-                    if (!this.server.loading && !this.server.connected)
-                        return "disconnected";
-                    return "loading";
+                    return "disconnected";
                 };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: "chat-app",
                         directives: [main_component_1.MainComponent, join_component_1.JoinComponent],
                         providers: [chat_service_1.ChatService],
-                        template: "\n    <div class=\"container\">\n      <h1>{{title}} \n        <!-- status tag changes based upon the connection state -->\n        <span id=\"status\" class=\"label label-default\"\n          [class.label-default]=\"server.loading\" \n          [class.label-success]=\"!server.loading && server.connected\" \n          [class.label-danger]=\"!server.loading && !server.connected\">{{statusMessage()}}</span>\n      </h1>\n    </div>\n    <!-- show join component if the server is not connected or the user hasn't joined yet -->\n    <join-chat *ngIf=\"!server.connected || !server.joined\"></join-chat>\n    <!-- else show main component (if conected and user has joined) -->\n    <main-chat *ngIf=\"server.connected && server.joined\"></main-chat>\n  "
+                        template: "\n    <div class=\"container\">\n      <h1>{{title}} \n        <!-- status tag changes based upon the connection state -->\n        <span id=\"status\" [ngClass]=\"statusClass()\">{{statusMessage()}}</span>\n      </h1>\n    </div>\n    <!-- show join component if the server is not connected or the user hasn't joined yet -->\n    <join-chat *ngIf=\"!server.connected || !server.joined\"></join-chat>\n    <!-- else show main component (if conected and user has joined) -->\n    <main-chat *ngIf=\"server.connected && server.joined\"></main-chat>\n  "
                     }), 
                     __metadata('design:paramtypes', [chat_service_1.ChatService])
                 ], AppComponent);
